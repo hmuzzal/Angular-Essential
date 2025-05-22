@@ -101,8 +101,8 @@ angular-boilerplate/
 ## 🚀 Quick Start
 
 ```bash
-git clone https://github.com/your-username/angular-enterprise-boilerplate.git
-cd angular-enterprise-boilerplate
+git clone https://github.com/hmuzzal/Angular-Essential.git
+cd Angular-Essential
 npm install
 ng serve
 ```
