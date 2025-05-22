@@ -8,7 +8,7 @@ describe('CustomInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CustomInputComponent ]
+      imports: [CustomInputComponent]
     })
     .compileComponents();
 

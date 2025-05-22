@@ -8,7 +8,7 @@ describe('PlaceSearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PlaceSearchComponent ]
+      imports: [PlaceSearchComponent]
     })
     .compileComponents();
 

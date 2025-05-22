@@ -1,7 +1,13 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { routes } from './app/app.routes';
+import { provideRouter } from '@angular/router';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { NZ_ICONS } from 'ng-zorro-antd/icon'; import { UserOutline, TeamOutline, FileOutline, MenuFoldOutline, MenuUnfoldOutline } from '@ant-design/icons-angular/icons';
+import { provideHttpClient } from '@angular/common/http';
 
-import { AppModule } from './app/app.module';
+const icons = [UserOutline, TeamOutline, FileOutline, MenuFoldOutline, MenuUnfoldOutline];
 
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [provideHttpClient(), provideAnimations(), provideRouter(routes), { provide: NZ_ICONS, useValue: icons }]
+});
