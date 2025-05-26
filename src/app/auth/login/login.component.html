@@ -1,1 +1,62 @@
-<p>login works!</p>
+<div class="login-page">
+  <div class="login-container">
+    <div nz-row nzJustify="center" class="login-content">
+      <div nz-col class="image-section">
+        <div class="image-wrapper">
+          <img src="assets/images/login-image.jpg" alt="Login Illustration" class="login-image">
+          <div class="image-overlay">
+            <h1 nz-typography>Welcome Back!</h1>
+            <p nz-typography>Sign in to access your dashboard</p>
+          </div>
+        </div>
+      </div>
+      <div nz-col class="form-section">
+        <div class="form-wrapper">
+          <h2 class="form-title">Sign In</h2>
+          <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please input your username!">
+                <nz-input-group nzPrefixIcon="user" [nzSize]="'large'">
+                  <input type="text" nz-input formControlName="userName" placeholder="Username">
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please input your Password!">
+                <nz-input-group nzPrefixIcon="lock" [nzSize]="'large'">
+                  <input type="password" nz-input formControlName="password" placeholder="Password">
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+            <div class="form-options">
+              <label nz-checkbox>Remember me</label>
+              <a class="forgot-password">Forgot password?</a>
+            </div>
+            <button nz-button class="login-button" nzType="primary" nzSize="large" nzBlock>
+              Log in
+            </button>
+            <div class="social-login">
+              <div class="divider">
+                <span>or continue with</span>
+              </div>
+              <div class="social-buttons">
+                <button nz-button nzType="default" nzShape="circle">
+                  <i nz-icon nzType="google" nzTheme="outline"></i>
+                </button>
+                <button nz-button nzType="default" nzShape="circle">
+                  <i nz-icon nzType="facebook" nzTheme="outline"></i>
+                </button>
+                <button nz-button nzType="default" nzShape="circle">
+                  <i nz-icon nzType="twitter" nzTheme="outline"></i>
+                </button>
+              </div>
+            </div>
+            <div class="register-link">
+              Don't have an account? <a>Sign up</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

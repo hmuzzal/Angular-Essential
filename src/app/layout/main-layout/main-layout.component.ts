@@ -13,4 +13,10 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 })
 export class MainLayoutComponent {
   isCollapsed = false;
+
+  private authService = inject(AuthService);
+
+  logout() {
+    this.authService.logout();
+  }
 }
