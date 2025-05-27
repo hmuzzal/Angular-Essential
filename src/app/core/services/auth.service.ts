@@ -17,8 +17,11 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {
     // Initialize auth state from storage
-    const token = localStorage.getItem('auth_token');
-    this.isAuthenticated.set(!!token);
+   
+     if (typeof window !== 'undefined' && window.localStorage) {
+       const token = localStorage.getItem('auth_token');
+       this.isAuthenticated.set(!!token);
+    }
 
   }
 
@@ -44,7 +47,8 @@ export class AuthService {
         if (response.token) {
           localStorage.setItem('auth_token', response.token);
           this.isAuthenticated.set(true);
-          this.router.navigate(['/home']);
+          const returnTo = this.returnUrl() || '/home';
+          this.router.navigate([returnTo]);
         }
         this.isLoading.set(false);
       }),
@@ -63,10 +67,9 @@ export class AuthService {
   }
 
   
-  isLoggedIn() {
-    debugger;
-    return this.isAuthenticated();
-  }
+isLoggedIn(): boolean {
+  return this.isAuthenticated(); 
+}
 
   setReturnUrl(url: string) {
     this.returnUrl.set(url);
