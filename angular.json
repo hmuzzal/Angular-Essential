@@ -7,7 +7,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "less"
         }
       },
       "root": "",
@@ -24,7 +24,7 @@
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
-            "inlineStyleLanguage": "scss",
+            "inlineStyleLanguage": "less",
             "assets": [
               {
                 "glob": "**/*",
@@ -34,11 +34,21 @@
                 "glob": "**/*",
                 "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
                 "output": "/assets/"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
               }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/assets/styles"
+              ]
+            },
             "styles": [
-              "src/theme.less",
-              "src/styles.scss"
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+              "src/assets/styles/styles.less"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
@@ -94,7 +104,7 @@
               "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
+            "inlineStyleLanguage": "less",
             "assets": [
               {
                 "glob": "**/*",
@@ -102,7 +112,7 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/assets/styles/styles.less"
             ],
             "scripts": []
           }

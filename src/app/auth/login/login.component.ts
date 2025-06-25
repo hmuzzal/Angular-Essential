@@ -1,47 +1,66 @@
-import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AntDesignModule } from '../../shared/ant-design/ant-design.module';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { AuthService } from '../../core/services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
-  standalone: true,
   selector: 'app-login',
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    AntDesignModule
-  ],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, NzIconModule, NzFormModule, NzInputModule, NzCheckboxModule, NzButtonModule, NzGridModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: ['./login.component.less']
 })
-export class LoginComponent  {
-  private fb = inject(FormBuilder);
-  private message = inject(NzMessageService);
-  private router = inject(Router);
-  authService = inject(AuthService);
 
-  validateForm: FormGroup = this.fb.group({
-    userName: [null, [Validators.required]],
-    password: [null, [Validators.required]],
-    remember: [true]
-  });
+export class LoginComponent implements OnInit {
+  loginForm!: FormGroup;
+  isLoading = false;
+  isLoginMode = true;
+  signUpForm!: FormGroup;
+    selectedDateRange: Date[] = [];
 
-  submitForm(): void {
-    // Validate form
-    for (const i in this.validateForm.controls) {
-      this.validateForm.controls[i].markAsDirty();
-      this.validateForm.controls[i].updateValueAndValidity();
-    }
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private message: NzMessageService
+  ) {
+    this.loginForm = this.fb.group({
+      username: [''],
+      password: [''],
+      remember: [false]
+    });
+  }
 
-    if (this.validateForm.valid) {
-      const { userName, password } = this.validateForm.value;
-      
-      this.authService.login(userName, password).subscribe({
-        next: () => this.message.success('Login successful'),
-        error: () => this.message.error('Login failed')
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      username: [null, [Validators.required]],
+      password: [null, [Validators.required]],
+      remember: [true]
+    });
+  }
+  
+  toggleAuthMode(mode: 'login' | 'signup'): void {
+    this.isLoginMode = mode === 'login';
+  }
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      this.isLoading = true;
+      // Simulate API call
+      setTimeout(() => {
+        this.isLoading = false;
+        this.message.success('Login successful!');
+        this.router.navigate(['/dashboard']);
+      }, 1500);
+    } else {
+      Object.values(this.loginForm.controls).forEach(control => {
+        control.markAsDirty();
+        control.updateValueAndValidity({ onlySelf: true });
       });
     }
   }

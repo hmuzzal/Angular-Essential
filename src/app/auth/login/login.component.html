@@ -1,62 +1,98 @@
-<div class="login-page">
-  <div class="login-container">
-    <div nz-row nzJustify="center" class="login-content">
-      <div nz-col class="image-section">
-        <div class="image-wrapper">
-          <img src="assets/images/login-image.jpg" alt="Login Illustration" class="login-image">
-          <div class="image-overlay">
-            <h1 nz-typography>Welcome Back!</h1>
-            <p nz-typography>Sign in to access your dashboard</p>
+<div class="auth-layout">
+  <div nz-row class="auth-row">
+    <!-- Auth Actions (Login/Signup links) -->
+    <div nz-col nzSpan="2" class="auth-side-action">
+      <div class="auth-side-wrapper">
+        <button nz-button class="auth-button" [ngClass]="{ 'active': isLoginMode }" nzBlock [nzLoading]="isLoading"
+          (click)="toggleAuthMode('login')">
+          <i nz-icon nzType="user" class="auth-button-icon"></i>
+          <div class="auth-button-text">Login</div>
+        </button>
+
+        <button nz-button class="auth-button" [ngClass]="{ 'active': !isLoginMode }" nzBlock [nzLoading]="isLoading"
+          (click)="toggleAuthMode('signup')">
+          <nz-icon nzType="plus" nzTheme="outline" class="auth-button-icon" />
+          <div class="auth-button-text">Sign Up</div>
+        </button>
+
+      </div>
+    </div>
+    <!-- Welcome Message Area -->
+    <div nz-col nzSpan="11" class="auth-center">
+      <div class="auth-center-content">
+        <img class="logo" src="assets/images/logo.png" alt="Company Logo">
+        <h1 class="dv-login-title">WELCOME TO LINE</h1>
+        <p class="dv-login-title-info">Login here and Edit Link</p>
+      </div>
+    </div>
+    <!-- Form Area -->
+    <div nz-col nzSpan="11" class="auth-form">
+      <div class="form-container">
+        <h2 class="form-title">{{ isLoginMode ? 'Sign In' : 'Sign Up' }}</h2>
+        <!-- Login Form -->
+        <form *ngIf="isLoginMode" nz-form [formGroup]="loginForm" class="auth-form-fields" (ngSubmit)="onSubmit()">
+          <!-- Username -->
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your username!">
+              <nz-input-group>
+                <input type="text" nz-input formControlName="username" placeholder="Username" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- Password -->
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your password!">
+              <nz-input-group>
+                <input type="password" nz-input formControlName="password" placeholder="Password" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- Options -->
+          <div class="form-options">
+            <label nz-checkbox formControlName="remember">Remember me</label>
+            <a class="link-default">Forgot password?</a>
           </div>
-        </div>
+
+          <!-- Register Link -->
+          <div class="auth-register-link">
+            Don't have an account? <a class="link-default" (click)="toggleAuthMode('signup')">Sign up</a>
+          </div>
+        </form>
+
+        <!-- Sign Up Form -->
+        <form *ngIf="!isLoginMode" nz-form [formGroup]="signUpForm" class="auth-form-fields" (ngSubmit)="onSubmit()">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your full name!">
+              <input type="text" nz-input formControlName="fullName" placeholder="Full Name" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your email!">
+              <input type="email" nz-input formControlName="email" placeholder="Email" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your password!">
+              <input type="password" nz-input formControlName="password" placeholder="Password" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please confirm your password!">
+              <input type="password" nz-input formControlName="confirmPassword" placeholder="Confirm Password" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <div class="auth-register-link">
+            Already have an account? <a (click)="toggleAuthMode('login')">Login</a>
+          </div>
+        </form>
       </div>
-      <div nz-col class="form-section">
-        <div class="form-wrapper">
-          <h2 class="form-title">Sign In</h2>
-          <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
-            <nz-form-item>
-              <nz-form-control nzErrorTip="Please input your username!">
-                <nz-input-group nzPrefixIcon="user" [nzSize]="'large'">
-                  <input type="text" nz-input formControlName="userName" placeholder="Username">
-                </nz-input-group>
-              </nz-form-control>
-            </nz-form-item>
-            <nz-form-item>
-              <nz-form-control nzErrorTip="Please input your Password!">
-                <nz-input-group nzPrefixIcon="lock" [nzSize]="'large'">
-                  <input type="password" nz-input formControlName="password" placeholder="Password">
-                </nz-input-group>
-              </nz-form-control>
-            </nz-form-item>
-            <div class="form-options">
-              <label nz-checkbox>Remember me</label>
-              <a class="forgot-password">Forgot password?</a>
-            </div>
-            <button nz-button class="login-button" nzType="primary" nzSize="large" nzBlock>
-              Log in
-            </button>
-            <div class="social-login">
-              <div class="divider">
-                <span>or continue with</span>
-              </div>
-             <div class="social-buttons">
-  <button nz-button nzType="default" nzShape="circle">
-    <nz-icon nzType="google" nzTheme="outline"></nz-icon>
-  </button>
-  <button nz-button nzType="default" nzShape="circle">
-    <nz-icon nzType="facebook" nzTheme="outline"></nz-icon>
-  </button>
-  <button nz-button nzType="default" nzShape="circle">
-    <nz-icon nzType="twitter" nzTheme="outline"></nz-icon>
-  </button>
-</div>
-            </div>
-            <div class="register-link">
-              Don't have an account? <a>Sign up</a>
-            </div>
-          </form>
-        </div>
-      </div>
+
     </div>
   </div>
 </div>

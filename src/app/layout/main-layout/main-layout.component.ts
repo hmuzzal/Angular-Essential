@@ -1,24 +1,14 @@
 import { Component, inject } from '@angular/core';
+import { SideMenuComponent } from '../../shared/components/side-menu/side-menu.component';
 import { RouterOutlet } from '@angular/router';
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
-import { AuthService } from '../../core/services/auth.service';
 
 @Component({
-  standalone: true, 
-  selector: 'app-main-layout',
-  imports: [RouterOutlet, NzBreadCrumbModule, NzIconModule, NzMenuModule, NzLayoutModule],
+  standalone: true,
+  selector: 'main-layout',
+  imports: [RouterOutlet, SideMenuComponent],
   templateUrl: './main-layout.component.html',
-  styleUrl: './main-layout.component.scss'
+  styleUrl: './main-layout.component.less'
 })
 export class MainLayoutComponent {
-  isCollapsed = false;
 
-  private authService = inject(AuthService);
-
-  logout() {
-    this.authService.logout();
-  }
 }
